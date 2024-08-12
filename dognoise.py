@@ -32,7 +32,7 @@ def dognoise():
         if bottom_btn.is_pressed:
             if not pressed:
                 pressed = True
-                bark()
+                bark(sounds)
         else:
             pressed = False
 

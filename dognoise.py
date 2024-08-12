@@ -27,8 +27,8 @@ def dognoise():
     while True:
         if bottom_btn.is_pressed:
             print("Woof!")
-        else:
-            print("No button press")
+        # else:
+            # print("No button press")
 
 
 

@@ -6,12 +6,15 @@ from os import walk, path
 
 def load_sounds():
     pygame.init()
-    sounds = {}
+    sounds = []
     exts = ('.wav', '.mp3')
     for root, _, files in walk('sounds'):
         for filename in files:
             if filename.endswith(exts):
-                sounds[filename.split('.')[0]] = pygame.mixer.Sound(path.join(root, filename))
+                print(filename)
+                sounds.append(pygame.mixer.Sound(path.join(root, filename)))
+
+    print(sounds)
     return sounds
     
 

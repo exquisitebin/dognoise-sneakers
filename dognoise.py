@@ -19,8 +19,8 @@ from os import walk, path
 def dognoise():
     # sounds = load_sounds()
     print("Dog noise started")
-    
-    bottom_btn = Button(2)
+
+    bottom_btn = Button(3)
 
     while True:
         if bottom_btn.is_pressed:

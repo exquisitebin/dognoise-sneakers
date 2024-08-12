@@ -8,10 +8,10 @@ def load_sounds():
     pygame.init()
     sounds = []
     exts = ('.wav', '.mp3')
-    for root, _, files in walk('sounds'):
+    for root, _, files in walk('dog-sounds'):
         for filename in files:
+            print(filename)
             if filename.endswith(exts):
-                print(filename)
                 sounds.append(pygame.mixer.Sound(path.join(root, filename)))
 
     print(sounds)

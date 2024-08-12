@@ -15,6 +15,8 @@ from os import walk, path
 #     return sounds
     
 
+def bark():
+    print("Woof!")
 
 def dognoise():
     # sounds = load_sounds()
@@ -24,14 +26,12 @@ def dognoise():
 
     while True:
         if bottom_btn.is_pressed:
-            bark()
+            print("Woof!")
         else:
             print("No button press")
 
 
 
-def bark():
-    print("Woof!")
     
 
 

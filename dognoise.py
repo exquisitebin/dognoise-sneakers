@@ -22,7 +22,7 @@ def dognoise():
     # sounds = load_sounds()
     print("Dog noise started")
 
-    bottom_btn = Button(3)
+    bottom_btn = Button(27)
 
     while True:
         if bottom_btn.is_pressed:

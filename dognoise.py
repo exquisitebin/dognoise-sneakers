@@ -17,10 +17,9 @@ def load_sounds():
 
 
 def dognoise():
-    sounds = load_sounds()
+    # sounds = load_sounds()
 
     bottom_btn = Button(2)
-
 
     while True:
         if bottom_btn.is_pressed:

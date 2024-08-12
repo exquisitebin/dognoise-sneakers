@@ -20,7 +20,7 @@ def load_sounds():
 
 def bark(sounds):
     print("Woof!")
-    sounds['bark'].play()
+    sounds[0].play()
     
 
 def dognoise():

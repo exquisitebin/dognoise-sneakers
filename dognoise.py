@@ -13,8 +13,6 @@ def safe_exit(signum, frame):
     exit(0)
 
 
-
-
 def load_sounds():
     pygame.init()
     sounds = []
@@ -47,16 +45,15 @@ def button_thread():
         else:
             pressed = False
 
-# def sensor_thread():
-#     global shoes_enabled
-#     sensor = DistanceSensor(echo=20, trigger=21)
-#     while True:
-#         if sensor.distance < 0.04:
-#             print("Shoes enabled")
-#             shoes_enabled = True
-#             break
-#         sleep(0.1)
-#     sensor.close()
+def sensor_thread():
+    global shoes_enabled
+    sensor = DistanceSensor(echo=20, trigger=21)
+    while True:
+        if sensor.distance < 0.04:
+            shoes_enabled = True
+            break
+        sleep(0.1)
+    sensor.close()
 
       
     
@@ -65,22 +62,23 @@ def dognoise():
     global shoes_enabled
 
     thread_button = Thread(target=button_thread)
+    thread_sensor = Thread(target=sensor_thread)
     sensor = DistanceSensor(echo=20, trigger=21)
     print("Dog noise started")
 
     try:
         thread_button.start()
+        thread_sensor.start()
         
-        while True:
-            if sensor.distance < 0.04:
-                print("Shoes enabled")
-                shoes_enabled = True
-                break
-            sleep(0.1)
+        thread_sensor.join()
+        thread_button.join()
        
     except KeyboardInterrupt:
         pass
     finally:
+        print("Exiting")
+
+        thread_sensor.join()
         thread_button.join()
         sensor.close()
         print("Cleaning up")

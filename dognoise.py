@@ -6,6 +6,7 @@ from os import walk, path
 from threading import Thread
 
 shoes_enabled = False
+exit_signal = False
 
 def safe_exit(signum, frame):
     print("Exiting")
@@ -33,11 +34,12 @@ def bark(sounds):
 
 def button_thread():
     global shoes_enabled
+    global exit_signal
     sounds = load_sounds()
 
     sole_btn = Button(27)
 
-    while True:
+    while not exit_signal:
         if sole_btn.is_pressed and shoes_enabled:
             if not pressed:
                 pressed = True
@@ -47,8 +49,9 @@ def button_thread():
 
 def sensor_thread():
     global shoes_enabled
+    global exit_signal
     sensor = DistanceSensor(echo=20, trigger=21)
-    while True:
+    while not exit_signal:
         if sensor.distance < 0.04:
             shoes_enabled = True
             break
@@ -60,10 +63,10 @@ def sensor_thread():
 
 def dognoise():
     global shoes_enabled
+    global exit_signal
 
     thread_button = Thread(target=button_thread)
     thread_sensor = Thread(target=sensor_thread)
-    sensor = DistanceSensor(echo=20, trigger=21)
     print("Dog noise started")
 
     try:
@@ -77,10 +80,9 @@ def dognoise():
         pass
     finally:
         print("Exiting")
-
+        exit_signal = True
         thread_sensor.join()
         thread_button.join()
-        sensor.close()
         print("Cleaning up")
         pygame.quit()
         exit(0)

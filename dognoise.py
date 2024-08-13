@@ -54,7 +54,8 @@ def sensor_thread():
     while not exit_signal:
         if sensor.distance < 0.04:
             shoes_enabled = True
-            break
+        else:
+            shoes_enabled = False
         sleep(0.1)
     sensor.close()
 

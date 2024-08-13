@@ -7,6 +7,7 @@ from threading import Thread
 
 shoes_enabled = False
 exit_signal = False
+sounds = []
 
 def safe_exit(signum, frame):
     print("Exiting")
@@ -28,9 +29,12 @@ def load_sounds():
     return sounds
     
 
-def bark(sounds):
-    print("Woof!")
-    sounds[0].play()
+def bark():
+    global shoes_enabled
+    global sounds
+    if shoes_enabled:
+        print("Woof!")
+        sounds[0].play()
 
 def button_thread():
     global shoes_enabled
@@ -70,7 +74,7 @@ def dognoise():
     thread_sensor = Thread(target=sensor_thread)
     print("Dog noise started")
     button = Button(27)
-    button.when_pressed = dognoise
+    button.when_pressed = bark
 
     try:
         
@@ -95,4 +99,5 @@ def dognoise():
 if __name__ == '__main__':
     signal(SIGTERM, safe_exit)
     signal(SIGHUP, safe_exit)
+    sounds = load_sounds()
     dognoise()

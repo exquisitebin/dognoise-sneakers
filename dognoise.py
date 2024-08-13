@@ -3,6 +3,9 @@ from time import sleep
 from signal import signal, SIGTERM, SIGHUP, pause
 import pygame
 from os import walk, path
+from threading import Thread
+
+shoes_enabled = False
 
 def safe_exit(signum, frame):
     print("Exiting")
@@ -29,32 +32,56 @@ def load_sounds():
 def bark(sounds):
     print("Woof!")
     sounds[0].play()
+
+def button_thread():
+    global shoes_enabled
+    sounds = load_sounds()
+
+    sole_btn = Button(27)
+
+    while True:
+        if sole_btn.is_pressed and shoes_enabled:
+            if not pressed:
+                pressed = True
+                bark(sounds)
+        else:
+            pressed = False
+
+# def sensor_thread():
+#     global shoes_enabled
+#     sensor = DistanceSensor(echo=20, trigger=21)
+#     while True:
+#         if sensor.distance < 0.04:
+#             print("Shoes enabled")
+#             shoes_enabled = True
+#             break
+#         sleep(0.1)
+#     sensor.close()
+
+      
     
 
 def dognoise():
+    global shoes_enabled
+
+    thread_button = Thread(target=button_thread)
     sensor = DistanceSensor(echo=20, trigger=21)
-    sounds = load_sounds()
     print("Dog noise started")
 
-
-
-
-    bottom_btn = Button(27)
-
-    pressed = False
     try:
+        thread_button.start()
+        
         while True:
-            if bottom_btn.is_pressed:
-                if not pressed:
-                    pressed = True
-                    bark(sounds)
-            else:
-                pressed = False
-
-            print(sensor.value)
+            if sensor.distance < 0.04:
+                print("Shoes enabled")
+                shoes_enabled = True
+                break
+            sleep(0.1)
+       
     except KeyboardInterrupt:
         pass
     finally:
+        thread_button.join()
         sensor.close()
         print("Cleaning up")
         pygame.quit()

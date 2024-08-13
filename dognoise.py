@@ -56,7 +56,7 @@ def sensor_thread():
             shoes_enabled = True
         else:
             shoes_enabled = False
-        sleep(0.1)
+        sleep(0.5)
     sensor.close()
 
       
@@ -66,16 +66,19 @@ def dognoise():
     global shoes_enabled
     global exit_signal
 
-    thread_button = Thread(target=button_thread)
+    # thread_button = Thread(target=button_thread)
     thread_sensor = Thread(target=sensor_thread)
     print("Dog noise started")
+    button = Button(27)
+    button.when_pressed = dognoise
 
     try:
-        thread_button.start()
+        
+        # thread_button.start()
         thread_sensor.start()
         
         thread_sensor.join()
-        thread_button.join()
+        # thread_button.join()
        
     except KeyboardInterrupt:
         pass
@@ -83,7 +86,7 @@ def dognoise():
         print("Exiting")
         exit_signal = True
         thread_sensor.join()
-        thread_button.join()
+        # thread_button.join()
         print("Cleaning up")
         pygame.quit()
         exit(0)

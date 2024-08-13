@@ -30,11 +30,11 @@ def load_sounds():
     
 
 def bark():
-    global shoes_enabled
+    # global shoes_enabled
     global sounds
-    if shoes_enabled:
-        print("Woof!")
-        sounds[0].play()
+    # if shoes_enabled:
+    print("Woof!")
+    sounds[0].play()
 
 def button_thread():
     global shoes_enabled

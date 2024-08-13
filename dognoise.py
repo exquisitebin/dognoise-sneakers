@@ -52,7 +52,6 @@ def dognoise():
                 pressed = False
 
             print(sensor.value)
-            sleep(0.1)
     except KeyboardInterrupt:
         pass
     finally:

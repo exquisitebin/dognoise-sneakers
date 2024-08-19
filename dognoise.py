@@ -1,3 +1,4 @@
+from random import randint
 from gpiozero import Button, DistanceSensor
 from time import sleep
 from signal import signal, SIGTERM, SIGHUP, pause
@@ -27,14 +28,16 @@ def load_sounds():
 
     print(sounds)
     return sounds
-    
+
+def random_index():
+    return randint(0, len(sounds) - 1)
 
 def bark():
     global shoes_enabled
     global sounds
     if shoes_enabled:
         print("Woof!")
-        sounds[0].play()
+        sounds[random_index()].play()
 
 def button_thread():
     global shoes_enabled

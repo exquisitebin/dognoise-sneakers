@@ -60,7 +60,7 @@ def sensor_thread():
     sensor = DistanceSensor(echo=20, trigger=21)
     while not exit_signal:
         print(sensor.distance)
-        if sensor.distance < 0.04:
+        if sensor.distance < 0.06:
             shoes_enabled = True
         else:
             shoes_enabled = False

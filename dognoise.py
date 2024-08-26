@@ -37,7 +37,7 @@ def bark():
     global sounds
     if shoes_enabled:
         index = random_index()
-        print(f"Woof! %d", index)
+        print(f"Woof! {index}")
         sounds[index].play()
 
 def button_thread():
